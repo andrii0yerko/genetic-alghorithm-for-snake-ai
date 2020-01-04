@@ -20,4 +20,6 @@ final class Field {
 	public final static Image apple_sprite = new ImageIcon("res/apple.png").getImage();
 	
 	public static boolean vis=true;
+	
+	public static String filename = "logic";
 }

@@ -39,6 +39,7 @@ public class Round
 		snakes_number = snakes_num;
 		number_of_parents =	parents_num;
 		round_number = prev.round_number+1;
+		turnLimit = prev.turnLimit;
 		for(int i=0;i<snakes_number;i++)
     	{
 			AISnake s = new AISnake(prev.bestSnakes.get(new Random((long)(Math.random()*100)).nextInt(prev.bestSnakes.size())), mutationRate);

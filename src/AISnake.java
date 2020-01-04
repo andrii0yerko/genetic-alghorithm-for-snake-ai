@@ -42,7 +42,7 @@ public class AISnake extends Snake{
 		super(start_x, start_y, len);
 		
 		try {
-	        FileReader fr = new FileReader("res/logic.txt");
+	        FileReader fr = new FileReader("res/"+Field.filename+".txt");
 	        Scanner scan = new Scanner(fr);
 	            
 	        for(int i=0;i<Field.SNAKE_VIS;i++)
@@ -84,7 +84,7 @@ public class AISnake extends Snake{
 	public void saveChanges()
 	{
 		try {
-	        FileWriter fw = new FileWriter("res/logic.txt");
+	        FileWriter fw = new FileWriter("res/"+Field.filename+".txt");
 	            
 	        for(int i=0;i<Field.SNAKE_VIS;i++)
 	        {

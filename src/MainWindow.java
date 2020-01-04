@@ -14,7 +14,10 @@ public class MainWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
+	static MainWindow mw;
+	
 	Timer timer;
+	boolean timerPaused=false;
 	Round round;
 	
 	JPanel control;
@@ -24,6 +27,9 @@ public class MainWindow extends JFrame implements ActionListener {
 	JSlider timer_speed;
 	JSlider turns_limit;
 	JSlider mutation_rate;
+	JButton pause;
+	JButton loadSaves;
+	JTextField saves;
 	
 	
 	public void actionPerformed(ActionEvent e) 
@@ -47,11 +53,7 @@ public class MainWindow extends JFrame implements ActionListener {
             repaint();
     	}
 		else {
-    	//round.update();
     	roundInfo.setText(round.Info());
-    	/*parents_num.setMaximum(snakes_num.getValue()/2+1);
-    	timer.setDelay(timer_speed.getValue());
-    	round.setTurnLimit(turns_limit.getValue()).setMutationRate(mutation_rate.getValue()/100);*/
     	round.update();
 		}
     	
@@ -100,12 +102,14 @@ public class MainWindow extends JFrame implements ActionListener {
         c2.weighty = 0.0;
         
         
-        String saves_string[] = {"1","2","3"};
+        //String saves_string[] = {Field.filename};
         JPanel menu = new JPanel(new GridBagLayout());
         menu.setBackground(Color.white);
         JButton loadSaves = new JButton("Load save:");
-        JButton pause = new JButton("Pause");
-        JComboBox saves = new JComboBox(saves_string);
+        loadSaves.addActionListener(new loadButton());
+        pause = new JButton("Pause");
+        pause.addActionListener(new pauseButton());
+        saves = new JTextField(Field.filename);
         saves.setEditable(true);
         menu.add(loadSaves,c1);
         menu.add(saves,c2);
@@ -202,12 +206,38 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-       MainWindow mw = new MainWindow();
+       mw = new MainWindow();
     }
     
     class visButton implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Field.vis = !Field.vis;
+        }
+    }
+    
+    
+    class pauseButton implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	if(timerPaused) {
+        		timer.start();
+        		pause.setText("Pause");
+        	}
+        	else {
+        		timer.stop();
+        		pause.setText("Unause");
+        	}
+        	timerPaused = !timerPaused;
+        }
+    }
+    
+    class loadButton implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	Field.filename = saves.getText();
+        	timer.stop();
+        	round = null;
+        	mw.dispose();
+        	mw = new MainWindow();
+        	
         }
     }
     
